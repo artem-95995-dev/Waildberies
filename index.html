@@ -523,9 +523,10 @@
     }
 
     function showPasswordModal(onSuccess) {
+        // Убрали подсказку с паролем, теперь placeholder нейтральный
         modalContent.innerHTML = `
             <h2>🔒 Введите пароль</h2>
-            <div class="input-group"><input type="password" id="passwordInput" placeholder="8282"></div>
+            <div class="input-group"><input type="password" id="passwordInput" placeholder="••••"></div>
             <div style="color:red; margin-bottom:16px;" id="passwordError"></div>
             <div class="modal-actions">
                 <button class="btn" id="cancelPassword">Отмена</button>
