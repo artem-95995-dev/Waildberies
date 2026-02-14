@@ -2,616 +2,729 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игровые Новости ✦ Секретная редакция</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Новости Москва · игровой портал</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background: linear-gradient(145deg, #0b0c0e 0%, #1a1d23 100%);
             min-height: 100vh;
+            background: radial-gradient(circle at 10% 30%, #ffe5e5, #dfe9ff, #c2d9ff);
+            background-attachment: fixed;
             display: flex;
-            justify-content: center;
-            padding: 20px;
-            color: #e0e4f0;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
         }
 
-        .glow-container {
-            max-width: 1100px;
+        /* главный контейнер — стеклянный эффект */
+        .app {
+            max-width: 1300px;
             width: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: clamp(32px, 5vw, 56px);
+            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+            padding: clamp(20px, 4vw, 40px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
-        /* хедер с неоновой полосой */
+        /* шапка */
         .header {
-            background: rgba(20, 25, 35, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(90, 150, 255, 0.25);
-            border-radius: 48px;
-            padding: 24px 36px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0, 15, 40, 0.6), 0 0 0 2px rgba(70, 130, 255, 0.1) inset;
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            gap: 24px 20px;
+            margin-bottom: 40px;
         }
-
-        .logo h1 {
-            font-weight: 600;
-            font-size: 2rem;
-            background: linear-gradient(135deg, #b8c9ff, #5f9aff);
+        .title-block {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 12px 20px;
+        }
+        .title-block h1 {
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #1e2a5e, #540d6e);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 15px #3f6eff55;
+            color: transparent;
+            text-shadow: 4px 4px 12px rgba(0,0,0,0.1);
         }
-
-        .logo span {
-            font-size: 0.9rem;
-            color: #9aa9c7;
-            margin-left: 12px;
-            font-weight: 300;
-            background: #252e3e;
-            padding: 4px 12px;
-            border-radius: 40px;
-            border: 1px solid #3f5580;
+        .badge {
+            background: rgba(255, 70, 70, 0.8);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            box-shadow: 0 10px 20px -5px rgba(255, 0, 0, 0.3);
+            border: 1px solid white;
         }
-
-        .admin-panel {
+        .actions {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
         }
-
-        .password-input {
-            background: #0e121c;
-            border: 2px solid #2a3450;
-            border-radius: 40px;
-            padding: 12px 22px;
-            color: white;
-            font-size: 1rem;
-            width: 200px;
-            outline: none;
-            transition: all 0.2s;
-            box-shadow: 0 0 5px #1e2b46;
-        }
-
-        .password-input:focus {
-            border-color: #5f8aff;
-            box-shadow: 0 0 18px #2f4eb0;
-        }
-
         .btn {
-            background: #2b344a;
-            border: none;
-            border-radius: 40px;
-            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            padding: 14px 28px;
+            border-radius: 60px;
             font-weight: 600;
-            font-size: 1rem;
-            color: #d3e0ff;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             cursor: pointer;
-            transition: 0.15s;
-            border: 1px solid #48587a;
-            box-shadow: 0 5px 12px #00000030;
+            box-shadow: 0 8px 20px -8px rgba(0,0,0,0.2);
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #1a1a2e;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.03);
+            border-color: #540d6e;
+        }
+        .btn:active { transform: scale(0.98); }
+
+        /* лента новостей — грид */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            margin: 30px 0 20px;
+            transition: 0.3s;
+        }
+        /* карточка */
+        .news-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 18px 18px 24px;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.15s;
+            cursor: pointer;
             display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .news-card:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateY(-8px);
+        }
+        /* изображение карточки */
+        .card-img {
+            width: 100%;
+            height: 180px;
+            border-radius: 28px;
+            background: rgba(220, 220, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 26px;
+            object-fit: cover;
+        }
+        .card-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            padding: 0 6px;
+        }
+        .card-desc {
+            font-size: 1rem;
+            line-height: 1.4;
+            color: #1e1e3f;
+            padding: 0 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* кнопка удаления (режим редактора) */
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 44px;
+            height: 44px;
+            background: #ff3b3b;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255,0,0,0.5);
+            transition: 0.2s;
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.7);
+            pointer-events: none;
+        }
+        .edit-mode .delete-btn {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+        .delete-btn:hover {
+            background: #d00000;
+            transform: scale(1.1);
+        }
+
+        /* детальный просмотр */
+        .news-detail {
+            background: rgba(255,255,255,0.35);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 32px;
+            margin-top: 20px;
+            border: 2px solid white;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: #1e2a5e;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-
-        .btn-primary {
-            background: linear-gradient(145deg, #2640aa, #16409e);
-            border-color: #6e96ff;
-            color: white;
-            text-shadow: 0 1px 3px black;
-            box-shadow: 0 0 15px #264ae0;
-        }
-
-        .btn-danger {
-            background: #391f2c;
-            border-color: #b04a5e;
-            color: #ffc1cf;
-        }
-
-        .btn-danger:hover {
-            background: #572a38;
-            border-color: #ff6a83;
-        }
-
-        .btn:hover {
-            transform: scale(1.02);
-            background: #31415f;
-            border-color: #7d9eff;
-        }
-
-        .btn-primary:hover {
-            background: #3153d0;
-            box-shadow: 0 0 22px #3f6aff;
-        }
-
-        /* гостевое предупреждение */
-        .guest-notice {
-            background: #232a33c0;
-            backdrop-filter: blur(5px);
-            border-radius: 40px;
-            padding: 18px 30px;
+        .detail-title {
+            font-size: clamp(2rem, 5vw, 3rem);
             margin-bottom: 30px;
-            border-left: 8px solid #ec5f8b;
-            border-right: 1px solid #5c3f50;
-            color: #ffd9e5;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 0 20px #b3004b30;
         }
-
-        .guest-notice .lock-icon {
-            font-size: 2rem;
-        }
-
-        /* карточки новостей */
-        .news-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .news-card {
-            background: rgba(26, 32, 45, 0.7);
-            backdrop-filter: blur(6px);
-            border: 1px solid #3e4a60;
-            border-radius: 36px;
-            padding: 32px 38px;
-            transition: all 0.2s;
-            box-shadow: 0 20px 30px -10px #00000080, 0 0 0 1px #5a6d94 inset;
-        }
-
-        .news-card:hover {
-            border-color: #789dff;
-            box-shadow: 0 25px 35px -8px #001c4b, 0 0 0 2px #5671c5 inset;
-            transform: translateY(-4px);
-        }
-
-        .news-title {
-            font-size: 2.1rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f0f4ff, #bfd6ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
-            padding-right: 70px; /* место под кнопку */
-            position: relative;
-        }
-
-        .news-date {
-            display: inline-block;
-            background: #262f40;
-            border-radius: 50px;
-            padding: 6px 18px;
-            font-size: 0.85rem;
-            color: #a9bfec;
-            margin-bottom: 20px;
-            border: 1px solid #4d6085;
-            box-shadow: 0 0 8px #1f3450;
-        }
-
-        .news-content {
-            font-size: 1.2rem;
+        .detail-text {
+            font-size: 1.3rem;
             line-height: 1.6;
-            color: #ccd9f0;
-            margin-bottom: 20px;
             white-space: pre-wrap;
+            margin: 30px 0;
+        }
+        .detail-photo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+            justify-content: center;
+        }
+        .detail-photo-row img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 32px;
+            box-shadow: 0 15px 25px -8px black;
+            border: 3px solid white;
         }
 
-        .delete-form {
-            display: inline-block;
-            margin-top: 12px;
+        /* модальный оверлей */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
-
-        .delete-btn {
-            background: rgba(150, 40, 60, 0.6);
-            border: 1px solid #ff6b8b;
-            color: #ffb5c5;
-            padding: 10px 26px;
-            border-radius: 60px;
+        .modal-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            border-radius: 56px;
+            padding: 36px;
+            max-width: 550px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(255,255,255,0.9);
+            box-shadow: 0 30px 60px -20px black;
+        }
+        .modal-container h2 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+        .input-group {
+            margin-bottom: 22px;
+        }
+        .input-group label {
             font-weight: 600;
-            font-size: 0.95rem;
-            backdrop-filter: blur(5px);
-            cursor: pointer;
-            transition: 0.15s;
-            box-shadow: 0 0 8px #ff3750;
-        }
-
-        .delete-btn:hover {
-            background: #b12e4b;
-            color: white;
-            border-color: #ffb0c0;
-            box-shadow: 0 0 22px #ff4d6d;
-        }
-
-        /* форма создания новости */
-        .create-area {
-            background: #1c2230e8;
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 38px;
-            border: 1px solid #5d79b0;
-            margin: 50px 0 30px;
-            box-shadow: 0 0 30px #1e3266;
-        }
-
-        .create-area h2 {
-            font-weight: 400;
-            font-size: 1.9rem;
-            margin-bottom: 32px;
-            color: #d5e2ff;
-            border-left: 6px solid #5f8aff;
-            padding-left: 28px;
-        }
-
-        .field {
-            margin-bottom: 28px;
-        }
-
-        .field label {
             display: block;
-            margin-bottom: 12px;
-            font-size: 1.2rem;
-            color: #adc3ff;
-            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
-
-        .field input, .field textarea {
+        .input-group input, .input-group textarea, .input-group select {
             width: 100%;
-            background: #0f1320;
-            border: 2px solid #29344f;
-            border-radius: 28px;
-            padding: 18px 26px;
-            font-size: 1.2rem;
-            color: white;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        .field textarea {
-            min-height: 160px;
-            resize: vertical;
-            border-radius: 36px;
-        }
-
-        .field input:focus, .field textarea:focus {
-            border-color: #5f8aff;
-            box-shadow: 0 0 25px #1745d0;
-        }
-
-        .create-btn {
-            background: linear-gradient(145deg, #1f9940, #128035);
-            border: 1px solid #70e08b;
-            color: white;
-            font-size: 1.5rem;
-            padding: 18px 42px;
-            border-radius: 60px;
-            font-weight: 700;
-            box-shadow: 0 0 25px #27d35c;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-        }
-
-        .create-btn:hover {
-            background: #29b44f;
-            box-shadow: 0 0 45px #3bed72;
-            border-color: #b6ffce;
-        }
-
-        /* футер с дисклеймером */
-        .footer {
-            margin-top: 70px;
-            text-align: center;
-            border-top: 2px dashed #5b6e97;
-            padding-top: 32px;
-            padding-bottom: 25px;
-            color: #94a6ce;
-            font-size: 1.15rem;
-            background: #0e141f30;
-            border-radius: 999px 999px 30px 30px;
-            backdrop-filter: blur(4px);
-        }
-
-        .disclaimer {
-            background: #2c1f2b;
-            padding: 18px 28px;
-            border-radius: 80px;
-            display: inline-block;
-            color: #f7b5cf;
-            border: 1px solid #ff86b0;
-            box-shadow: 0 0 32px #ff3162;
-            font-weight: 500;
-            letter-spacing: 0.8px;
-        }
-
-        .empty-news {
-            text-align: center;
-            padding: 70px;
-            background: #1b212e;
-            border-radius: 80px;
-            font-size: 1.8rem;
-            color: #a3b7e0;
-            border: 2px dashed #526ea2;
-        }
-
-        /* индикация админа */
-        .admin-badge {
-            background: #3d5035;
-            color: #c9ffb2;
+            padding: 16px 20px;
             border-radius: 40px;
-            padding: 8px 28px;
-            font-weight: 600;
-            border: 1px solid #a0f0a0;
-            box-shadow: 0 0 16px #32cd32;
+            border: 2px solid rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            outline: none;
         }
+        .input-group textarea {
+            resize: vertical;
+        }
+        .photo-preview-item {
+            background: rgba(255,255,255,0.5);
+            border-radius: 40px;
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+        }
+        .photo-preview-item img {
+            width: 70px;
+            height: 70px;
+            border-radius: 30px;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        /* подвал */
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+        }
+        .warning-banner {
+            background: #ff3b3b;
+            color: white;
+            font-weight: 800;
+            padding: 18px;
+            border-radius: 60px;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            letter-spacing: 1px;
+            box-shadow: 0 10px 0 #9b1d1d;
+            margin-bottom: 30px;
+            border: 2px solid white;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: clamp(16px, 4vw, 40px);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1a1a3a;
+        }
+
+        /* адаптация <500px */
+        @media (max-width: 500px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .modal-container {
+                padding: 24px;
+            }
+            .photo-preview-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        .hidden { display: none; }
+        input, textarea, select { font-size: 16px; } /* отмена зума на iOS */
     </style>
 </head>
 <body>
-    <div class="glow-container" id="app">
-        <!-- Шапка с авторизацией -->
-        <div class="header">
-            <div class="logo">
-                <h1>⏺ ИГРОМИР <span>новостной симулятор</span></h1>
-            </div>
-            <div class="admin-panel">
-                <input type="password" id="passwordInput" class="password-input" placeholder="пароль редакции" value="">
-                <button class="btn" id="unlockBtn">🔓 войти</button>
-                <button class="btn btn-danger" id="lockBtn">🔒 выйти</button>
-            </div>
+<div class="app">
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="title-block">
+            <h1>НОВОСТИ МОСКВА</h1>
+            <span class="badge">#центр столицы</span>
         </div>
-
-        <!-- Подсказка для гостей (небезопасно, но стильно) -->
-        <div class="guest-notice" id="guestNotice">
-            <span class="lock-icon">⚡</span>
-            <span><strong>режим чтения</strong> · доступ по паролю (только для администратора) · все данные хранятся в браузере</span>
+        <div class="actions">
+            <button class="btn" id="viewNewsBtn">📰 Смотреть новости</button>
+            <button class="btn" id="addNewsBtn">➕ Добавить новость</button>
         </div>
+    </header>
 
-        <!-- Блок создания новости (виден только админу) -->
-        <div id="createSection" style="display: none;" class="create-area">
-            <h2>✎ создать горячую новость</h2>
-            <div class="field">
-                <label>заголовок</label>
-                <input type="text" id="newsTitleInput" placeholder="Например: Вышла кибер-демка...">
-            </div>
-            <div class="field">
-                <label>текст новости</label>
-                <textarea id="newsContentInput" placeholder="Подробности, инсайды, игровые легенды..."></textarea>
-            </div>
-            <button class="create-btn" id="createNewsBtn">⚡ опубликовать ⚡</button>
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <main>
+        <!-- лента новостей (сетка) -->
+        <div id="newsGrid" class="news-grid"></div>
+
+        <!-- детальный просмотр (скрыт) -->
+        <div id="newsDetail" class="news-detail hidden">
+            <button class="back-btn" id="backToAllBtn">← ко всем</button>
+            <div id="detailContent"></div>
         </div>
+    </main>
 
-        <!-- Лента новостей -->
-        <div id="newsContainer" class="news-grid">
-            <!-- JS будет наполнять -->
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <div class="warning-banner">⚠️ ВСЕ НОВОСТИ ВЫМЫШЛЕНЫ (ВИДЕОИГРА) ⚠️</div>
+        <div class="footer-links">
+            <span>🕹️ Не игровой агрегатор</span>
+            <span>🎮 Чисто по приколу</span>
+            <span>🚫 Никакой политики</span>
         </div>
+    </footer>
+</div>
 
-        <!-- Футер с игровым дисклеймером -->
-        <div class="footer">
-            <div class="disclaimer">
-                🛡️ информация не защищена, носит исключительно игровой характер. все совпадения случайны.
+<!-- МОДАЛЬНЫЙ ОВЕРЛЕЙ (один на всё) -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-container" id="modalContent"></div>
+</div>
+
+<script>
+(function() {
+    // ---------- КЛЮЧ ХРАНИЛИЩА ----------
+    const STORAGE_KEY = 'moscow_news_online';
+
+    // ---------- ДЕМО-НОВОСТИ (без фото) ----------
+    const demoNews = [
+        { id: Date.now() - 100000, title: 'Метро "Прокшино" открыто!', shortDesc: 'Новая станция на юго-западе встретила первых пассажиров.', fullText: 'Сегодня мэр Москвы торжественно открыл станцию "Прокшино". Это 250-я станция московского метро. В холлах установлены интерактивные экраны.', photos: [] },
+        { id: Date.now() - 200000, title: 'Фестиваль "Лето в Москве"', shortDesc: 'В парках стартуют концерты и гастро-площадки.', fullText: 'С 1 июня по 1 сентября в 20 парках столицы пройдут выступления уличных музыкантов, мастер-классы и фуд-корты.', photos: [] },
+        { id: Date.now() - 300000, title: 'Парк Горького обновлён', shortDesc: 'Завершена реконструкция набережной.', fullText: 'Открыты новые зоны отдыха с шезлонгами, велодорожками и кафе. Теперь здесь можно кататься на сигвеях.', photos: [] },
+        { id: Date.now() - 400000, title: 'Сап-прогулка по Москве-реке', shortDesc: 'На ВДНХ открылся прокат сапбордов.', fullText: 'Теперь любой желающий может арендовать сап и проплыть по каналу. Спасатели дежурят ежедневно.', photos: [] }
+    ];
+
+    // ---------- СОСТОЯНИЕ ----------
+    let news = [];                  // все новости (загружаются из localStorage)
+    let editMode = false;           // режим удаления (долгий тап)
+    let currentDetailId = null;     // какая новость открыта в детале
+
+    // DOM элементы
+    const newsGrid = document.getElementById('newsGrid');
+    const newsDetail = document.getElementById('newsDetail');
+    const detailContent = document.getElementById('detailContent');
+    const backBtn = document.getElementById('backToAllBtn');
+    const viewNewsBtn = document.getElementById('viewNewsBtn');
+    const addNewsBtn = document.getElementById('addNewsBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalContent = document.getElementById('modalContent');
+
+    // ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------
+    function loadFromStorage() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try { news = JSON.parse(stored); } catch { news = []; }
+        }
+        if (!news || news.length === 0) {
+            news = [...demoNews];
+        }
+    }
+    function saveToStorage() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(news));
+    }
+
+    // рендер сетки (с учётом editMode)
+    function renderGrid() {
+        let html = '';
+        news.forEach(item => {
+            const firstPhoto = item.photos && item.photos.length > 0 ? item.photos[0].dataURL : null;
+            html += `
+                <div class="news-card" data-id="${item.id}">
+                    ${editMode ? '<span class="delete-btn" data-id="'+item.id+'">✕</span>' : ''}
+                    <div class="card-img">
+                        ${firstPhoto ? `<img src="${firstPhoto}" alt="photo">` : '🏙️'}
+                    </div>
+                    <div class="card-title">${escapeHtml(item.title) || 'Без названия'}</div>
+                    <div class="card-desc">${escapeHtml(item.shortDesc) || ''}</div>
+                </div>
+            `;
+        });
+        newsGrid.innerHTML = html;
+        // переключение класса режима
+        if (editMode) newsGrid.classList.add('edit-mode');
+        else newsGrid.classList.remove('edit-mode');
+    }
+
+    // простой эскейп для текста (чтобы избежать XSS, но данные свои)
+    function escapeHtml(unsafe) {
+        if (!unsafe) return unsafe;
+        return unsafe.replace(/[&<>"]/g, function(m) {
+            if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; if(m === '"') return '&quot;';
+            return m;
+        });
+    }
+
+    // рендер детального вида
+    function renderDetail(newsItem) {
+        if (!newsItem) return;
+        const topPhotos = (newsItem.photos || []).filter(p => p.position === 'top');
+        const midPhotos = (newsItem.photos || []).filter(p => p.position === 'middle');
+        const bottomPhotos = (newsItem.photos || []).filter(p => p.position === 'bottom');
+
+        let detailHtml = `<h2 class="detail-title">${escapeHtml(newsItem.title)}</h2>`;
+
+        // фото сверху
+        if (topPhotos.length) {
+            detailHtml += '<div class="detail-photo-row">' + topPhotos.map(p => `<img src="${p.dataURL}" alt="photo">`).join('') + '</div>';
+        }
+
+        detailHtml += `<div class="detail-text">${escapeHtml(newsItem.fullText) || ''}</div>`;
+
+        // фото в середине
+        if (midPhotos.length) {
+            detailHtml += '<div class="detail-photo-row">' + midPhotos.map(p => `<img src="${p.dataURL}" alt="photo">`).join('') + '</div>';
+        }
+
+        // фото в конце
+        if (bottomPhotos.length) {
+            detailHtml += '<div class="detail-photo-row">' + bottomPhotos.map(p => `<img src="${p.dataURL}" alt="photo">`).join('') + '</div>';
+        }
+
+        detailContent.innerHTML = detailHtml;
+        newsGrid.classList.add('hidden');
+        newsDetail.classList.remove('hidden');
+    }
+
+    // закрыть детальный -> показать сетку
+    function showGrid() {
+        newsDetail.classList.add('hidden');
+        newsGrid.classList.remove('hidden');
+        currentDetailId = null;
+    }
+
+    // ---------- МОДАЛКИ ----------
+    function hideModal() {
+        modalOverlay.style.display = 'none';
+        modalContent.innerHTML = '';
+    }
+
+    function showPasswordModal(onSuccess) {
+        modalContent.innerHTML = `
+            <h2>🔒 Введите пароль</h2>
+            <div class="input-group"><input type="password" id="passwordInput" placeholder="8282"></div>
+            <div style="color:red; margin-bottom:16px;" id="passwordError"></div>
+            <div class="modal-actions">
+                <button class="btn" id="cancelPassword">Отмена</button>
+                <button class="btn" id="submitPassword">Подтвердить</button>
             </div>
-            <div style="margin-top: 24px; opacity: 0.6;">
-                ✦ новостной движок v.0.3 · данные сохраняются в localStorage ✦
-            </div>
-        </div>
-    </div>
+        `;
+        modalOverlay.style.display = 'flex';
 
-    <script>
-        (function() {
-            // ---------- пароль (указан в задании 8282) не выводим в подсказках, но проверяем ----------
-            const SECRET_PASSWORD = "8282";
-
-            // состояние авторизации
-            let isAdmin = false;
-
-            // ----- элементы -----
-            const passwordInput = document.getElementById('passwordInput');
-            const unlockBtn = document.getElementById('unlockBtn');
-            const lockBtn = document.getElementById('lockBtn');
-            const guestNotice = document.getElementById('guestNotice');
-            const createSection = document.getElementById('createSection');
-            const newsContainer = document.getElementById('newsContainer');
-            const newsTitleInput = document.getElementById('newsTitleInput');
-            const newsContentInput = document.getElementById('newsContentInput');
-            const createNewsBtn = document.getElementById('createNewsBtn');
-
-            // хранилище новостей (массив объектов)
-            let newsItems = [];
-
-            // ---------- загрузка из localStorage ----------
-            function loadNews() {
-                try {
-                    const saved = localStorage.getItem('game_news_feed');
-                    if (saved) {
-                        newsItems = JSON.parse(saved);
-                    } else {
-                        // тестовые данные при первом запуске
-                        newsItems = [
-                            {
-                                id: Date.now() - 100000,
-                                title: "🔹 ИГРОВАЯ КОНСОЛЬ БУДУЩЕГО АНОНСИРОВАНА",
-                                content: "Разработчики показали концепт портативной консоли с голографическим экраном. Релиз намечен на 2030 год. Но это всё игровая легенда.",
-                                date: new Date(Date.now() - 86400000).toLocaleString()
-                            },
-                            {
-                                id: Date.now() - 2000000,
-                                title: "✨ НОВЫЙ КИБЕРПАНК-БЛОКБАСТЕР В РАЗРАБОТКЕ",
-                                content: "Студия Night Fable тизерит игру с открытым миром и нейросетевыми NPC. Говорят, демка будет доступна уже «когда-нибудь».",
-                                date: new Date(Date.now() - 172800000).toLocaleString()
-                            }
-                        ];
-                    }
-                } catch (e) {
-                    newsItems = [];
-                }
-                renderNews();
+        const passInput = document.getElementById('passwordInput');
+        const errorDiv = document.getElementById('passwordError');
+        document.getElementById('cancelPassword').addEventListener('click', hideModal);
+        document.getElementById('submitPassword').addEventListener('click', () => {
+            if (passInput.value === '8282') {
+                hideModal();
+                onSuccess();
+            } else {
+                errorDiv.textContent = 'Неверный пароль';
             }
+        });
+        // закрыть по клику на фон
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) hideModal(); };
+    }
 
-            // ---------- сохранить ----------
-            function saveNews() {
-                localStorage.setItem('game_news_feed', JSON.stringify(newsItems));
-            }
+    // форма добавления новости
+    function showAddModal() {
+        let selectedPhotos = []; // массив { file, dataURL, position } (dataURL временный)
 
-            // ---------- рендер новостей ----------
-            function renderNews() {
-                if (!newsContainer) return;
+        modalContent.innerHTML = `
+            <h2>➕ Новая новость</h2>
+            <div class="input-group"><label>Заголовок</label><input id="addTitle" placeholder="Событие"></div>
+            <div class="input-group"><label>Кратко (2 строки)</label><textarea id="addShort" rows="2"></textarea></div>
+            <div class="input-group"><label>Полный текст</label><textarea id="addFull" rows="3"></textarea></div>
+            <div class="input-group"><label>Фото (до 5 шт)</label><input type="file" id="photoInput" accept="image/*" multiple></div>
+            <div id="photoPreviewList"></div>
+            <div class="modal-actions">
+                <button class="btn" id="cancelAdd">Отмена</button>
+                <button class="btn" id="publishAdd">Опубликовать</button>
+            </div>
+        `;
+        modalOverlay.style.display = 'flex';
 
-                if (newsItems.length === 0) {
-                    newsContainer.innerHTML = `<div class="empty-news">📭 пока нет новостей. автор, напиши что-нибудь!</div>`;
-                    return;
-                }
+        const photoInput = document.getElementById('photoInput');
+        const previewList = document.getElementById('photoPreviewList');
 
-                // сортировка — свежие сверху (по дате добавления, можно и по id)
-                const sorted = [...newsItems].sort((a, b) => b.id - a.id);
+        function refreshPreviews() {
+            previewList.innerHTML = selectedPhotos.map((p, idx) => `
+                <div class="photo-preview-item" data-index="${idx}">
+                    <img src="${p.dataURL}">
+                    <select class="photo-position" data-index="${idx}">
+                        <option value="top" ${p.position==='top'?'selected':''}>🔝 над заголовком</option>
+                        <option value="middle" ${p.position==='middle'?'selected':''}>📌 в середине (по умолч.)</option>
+                        <option value="bottom" ${p.position==='bottom'?'selected':''}>🔚 в конце</option>
+                    </select>
+                    <button class="btn" data-remove="${idx}">❌ Удалить</button>
+                </div>
+            `).join('');
 
-                let htmlString = '';
-                sorted.forEach(item => {
-                    // защита от XSS (экранируем только для вывода, но данные доверенные, однако лучше подстраховаться)
-                    const safeTitle = escapeHtml(item.title || 'Без заголовка');
-                    const safeContent = escapeHtml(item.content || '');
-                    const safeDate = escapeHtml(item.date || new Date(item.id).toLocaleString());
-
-                    htmlString += `
-                        <div class="news-card" data-id="${item.id}">
-                            <div class="news-title">${safeTitle}</div>
-                            <div class="news-date">📅 ${safeDate}</div>
-                            <div class="news-content">${safeContent.replace(/\n/g, '<br>')}</div>
-                            ${isAdmin ? `
-                                <form class="delete-form" onsubmit="deleteNewsById(${item.id}); return false;">
-                                    <button type="submit" class="delete-btn">✖ удалить навсегда</button>
-                                </form>
-                            ` : ''}
-                        </div>
-                    `;
+            document.querySelectorAll('.photo-position').forEach(sel => {
+                sel.addEventListener('change', (e) => {
+                    const idx = e.target.dataset.index;
+                    if (selectedPhotos[idx]) selectedPhotos[idx].position = e.target.value;
                 });
-
-                newsContainer.innerHTML = htmlString;
-
-                // если админ — переопределим функцию глобально, чтобы обработчик удаления сработал
-                if (isAdmin) {
-                    // функция удаления должна быть доступна из onclick
-                    window.deleteNewsById = function(id) {
-                        if (!isAdmin) {
-                            alert('нет прав');
-                            return;
-                        }
-                        newsItems = newsItems.filter(item => item.id !== id);
-                        saveNews();
-                        renderNews();  // перерисуем
-                    };
-                } else {
-                    window.deleteNewsById = null;
-                }
-            }
-
-            // простейшее экранирование для текста
-            function escapeHtml(unsafe) {
-                return unsafe
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
-            }
-
-            // ---------- обновление UI в зависимости от прав ----------
-            function updateAdminUI() {
-                if (isAdmin) {
-                    // показать зону создания
-                    createSection.style.display = 'block';
-                    guestNotice.innerHTML = `<span class="lock-icon">🛡️</span>
-                        <span><strong>режим редактора</strong> · вы можете создавать и удалять новости (пароль принят)</span>`;
-                    guestNotice.style.borderLeftColor = '#8affb0';
-                    // удалим старые обработчики с кнопки создания, повесим новый (чтобы не дублировалось)
-                } else {
-                    createSection.style.display = 'none';
-                    guestNotice.innerHTML = `<span class="lock-icon">⚡</span>
-                        <span><strong>режим чтения</strong> · доступ по паролю (только для администратора) · все данные хранятся в браузере</span>`;
-                    guestNotice.style.borderLeftColor = '#ec5f8b';
-                }
-                // перерендерим, чтобы показать/скрыть кнопки удаления
-                renderNews();
-            }
-
-            // ---------- события входа/выхода ----------
-            unlockBtn.addEventListener('click', function() {
-                const entered = passwordInput.value.trim();
-                if (entered === SECRET_PASSWORD) {
-                    isAdmin = true;
-                    updateAdminUI();
-                    passwordInput.value = ''; // стираем пароль из поля (гигиена)
-                } else {
-                    alert('❌ неверный пароль. доступ только для автора (пароль 8282)');
-                }
             });
-
-            lockBtn.addEventListener('click', function() {
-                isAdmin = false;
-                updateAdminUI();
+            document.querySelectorAll('[data-remove]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = e.target.dataset.remove;
+                    selectedPhotos.splice(idx, 1);
+                    refreshPreviews();
+                });
             });
+        }
 
-            // создание новости
-            createNewsBtn.addEventListener('click', function() {
-                if (!isAdmin) {
-                    alert('сначала войдите как администратор');
-                    return;
-                }
-
-                const title = newsTitleInput.value.trim();
-                const content = newsContentInput.value.trim();
-
-                if (!title || !content) {
-                    alert('заполните заголовок и текст новости');
-                    return;
-                }
-
-                // создаём запись
-                const newNews = {
-                    id: Date.now(), // уникальный идентификатор (миллисекунды)
-                    title: title,
-                    content: content,
-                    date: new Date().toLocaleString()
+        photoInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            if (selectedPhotos.length + files.length > 5) {
+                alert('Максимум 5 фотографий');
+                return;
+            }
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    selectedPhotos.push({ dataURL: ev.target.result, position: 'middle' });
+                    refreshPreviews();
                 };
-
-                newsItems.push(newNews);
-                saveNews();
-
-                // очистить поля
-                newsTitleInput.value = '';
-                newsContentInput.value = '';
-
-                renderNews();
+                reader.readAsDataURL(file);
             });
+        });
 
-            // дополнительно: если нажать enter в поле пароля — тоже вход
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    unlockBtn.click();
-                }
+        document.getElementById('cancelAdd').addEventListener('click', hideModal);
+        document.getElementById('publishAdd').addEventListener('click', () => {
+            const title = document.getElementById('addTitle').value.trim() || 'Без названия';
+            const shortDesc = document.getElementById('addShort').value.trim() || '...';
+            const fullText = document.getElementById('addFull').value.trim() || '...';
+            const photosForSave = selectedPhotos.map(p => ({ dataURL: p.dataURL, position: p.position }));
+
+            const newNews = {
+                id: Date.now(),
+                title, shortDesc, fullText,
+                photos: photosForSave,
+            };
+            news = [newNews, ...news];
+            saveToStorage();
+            renderGrid();
+            hideModal();
+            // если открыт детальный — показать сетку
+            showGrid();
+        });
+
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) hideModal(); };
+    }
+
+    // ---------- УДАЛЕНИЕ (ПО КРЕСТИКУ) ----------
+    function deleteNewsById(id) {
+        news = news.filter(n => n.id != id);
+        saveToStorage();
+        renderGrid();    // после удаления перерисовываем сетку, editMode остаётся
+        if (currentDetailId == id) showGrid(); // если удалили открытую детальную — вернуться к сетке
+    }
+
+    // ---------- ДОЛГОЕ НАЖАТИЕ (EDIT MODE) ----------
+    let longPressTimer = null;
+    function startLongPress(e) {
+        e.preventDefault(); // для мобильных
+        if (longPressTimer) clearTimeout(longPressTimer);
+        longPressTimer = setTimeout(() => {
+            editMode = !editMode;
+            renderGrid(); // перерендер с крестиками/без
+            longPressTimer = null;
+        }, 1000);
+    }
+    function cancelLongPress() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    }
+
+    // ---------- ИНИЦИАЛИЗАЦИЯ ----------
+    loadFromStorage();
+    renderGrid();
+
+    // ---------- ОБРАБОТЧИКИ ----------
+    // долгое нажатие на кнопку "Смотреть новости"
+    viewNewsBtn.addEventListener('mousedown', startLongPress);
+    viewNewsBtn.addEventListener('mouseup', cancelLongPress);
+    viewNewsBtn.addEventListener('mouseleave', cancelLongPress);
+    viewNewsBtn.addEventListener('touchstart', startLongPress, { passive: false });
+    viewNewsBtn.addEventListener('touchend', cancelLongPress);
+    viewNewsBtn.addEventListener('touchcancel', cancelLongPress);
+
+    // клик по кнопке добавления новости (сначала пароль)
+    addNewsBtn.addEventListener('click', () => {
+        showPasswordModal(() => {
+            showAddModal();
+        });
+    });
+
+    // клик по сетке (делегирование)
+    newsGrid.addEventListener('click', (e) => {
+        // крестик удаления
+        if (e.target.classList.contains('delete-btn')) {
+            e.stopPropagation();
+            const id = e.target.dataset.id;
+            showPasswordModal(() => {
+                deleteNewsById(id);
             });
+            return;
+        }
+        // клик по карточке (открыть деталь)
+        const card = e.target.closest('.news-card');
+        if (card) {
+            const id = card.dataset.id;
+            const selected = news.find(n => n.id == id);
+            if (selected) {
+                currentDetailId = id;
+                renderDetail(selected);
+            }
+        }
+    });
 
-            // инициализация: загружаем, проверяем, что не админ, рендерим
-            loadNews();
-            isAdmin = false;
-            updateAdminUI();
+    // назад к списку
+    backBtn.addEventListener('click', showGrid);
 
-            // на всякий случай сохраняем глобально админ-статус (но он не нужен напрямую)
-        })();
-    </script>
+    // закрытие модалки по фону уже реализовано в каждой модалке отдельно (onclick)
+
+    // дополнительно: если где-то остался модал оверлей, клик по фону — закрыть
+    window.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) hideModal();
+    });
+
+    // предзагруженные демо сохраним, если localStorage пуст (уже сделано в load)
+    // при первом запуске сохраним демо в localStorage для единообразия
+    if (!localStorage.getItem(STORAGE_KEY)) {
+        saveToStorage();
+    }
+
+    // на всякий случай синхронизируем: при изменении массива сохраняем
+    // сохранение происходит в нужных местах (добавление/удаление)
+})();
+</script>
 </body>
 </html>
