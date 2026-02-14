@@ -491,7 +491,6 @@
             border: 2px solid #ffbaba;
         }
 
-        /* Адаптация для маленьких экранов */
         @media (max-width: 500px) {
             body { padding: 8px; }
             .header { flex-direction: column; align-items: stretch; }
@@ -504,7 +503,6 @@
             .modal-actions button { min-width: 100%; }
         }
 
-        /* Для телефонов с маленьким экраном */
         @media (max-width: 380px) {
             .btn { padding: 10px 12px; font-size: 0.9rem; }
             .card-title { font-size: 1.3rem; }
@@ -607,271 +605,56 @@
 </div>
 
 <script>
-    (function() {
-        let newsItems = [];
-        try {
-            const stored = localStorage.getItem('moscow_city_news_mobile');
-            if (stored) {
-                newsItems = JSON.parse(stored);
-            } else {
-                newsItems = [
-                    { id: 'msk1', title: 'Новая станция метро "Нагатинский Затон" открылась', excerpt: 'Пассажиров ждут витражные потолки и современные вестибюли.', fullText: 'Станция расположена на Замоскворецкой линии. Выходы ведут к набережной и жилым кварталам. Движение поездов запущено с утра.', images: [] },
-                    { id: 'msk2', title: 'Фестиваль "Московское лето" на Тверской', excerpt: 'Горожан ждут концерты, ярмарки и исторические реконструкции.', fullText: 'Улицу перекрыли для транспорта. Организаторы обещают выступления уличных театров и гастрономические ряды.', images: [] },
-                    { id: 'msk3', title: 'В парке Зарядье расцвели 3000 тюльпанов', excerpt: 'Небывалое цветение из-за ранней весны.', fullText: 'Сотрудники парка приглашают москвичей на фотосессии. Ландшафтный дизайн обновлён.', images: [] }
-                ];
-            }
-        } catch (e) {}
-
-        let isEditorMode = false;
-        let pendingDeleteId = null;
-        let photoFields = [];
-
-        // DOM элементы
-        const newsContainer = document.getElementById('newsContainer');
-        const detailView = document.getElementById('detailView');
-        const detailContent = document.getElementById('detailContent');
-        const backToListBtn = document.getElementById('backToList');
-        const addNewsBtn = document.getElementById('addNewsBtn');
-        const viewNewsBtn = document.getElementById('viewNewsBtn');
-        const passwordModal = document.getElementById('passwordModal');
-        const addModal = document.getElementById('addModal');
-        const passwordInput = document.getElementById('passwordInput');
-        const checkPasswordBtn = document.getElementById('checkPasswordBtn');
-        const cancelPassword = document.getElementById('cancelPassword');
-        const cancelAddModal = document.getElementById('cancelAddModal');
-        const publishBtn = document.getElementById('publishNewsBtn');
-        const passwordError = document.getElementById('passwordError');
-        const deletePasswordModal = document.getElementById('deletePasswordModal');
-        const deletePasswordInput = document.getElementById('deletePasswordInput');
-        const checkDeletePasswordBtn = document.getElementById('checkDeletePasswordBtn');
-        const cancelDeletePassword = document.getElementById('cancelDeletePassword');
-        const deletePasswordError = document.getElementById('deletePasswordError');
-        const titleInp = document.getElementById('newsTitle');
-        const excerptInp = document.getElementById('newsExcerpt');
-        const fullTextInp = document.getElementById('newsFullText');
-        const photoListDiv = document.getElementById('photoList');
-        const addPhotoBtn = document.getElementById('addPhotoBtn');
-
-        function rebuildPhotoList() {
-            if (!photoListDiv) return;
-            photoListDiv.innerHTML = '';
-            if (photoFields.length === 0) {
-                photoListDiv.innerHTML = '<div style="background:#ecf5fc; border-radius:50px; padding:20px; text-align:center;">📎 Добавьте фото</div>';
-                return;
-            }
-            for (let i = 0; i < photoFields.length; i++) {
-                const div = document.createElement('div');
-                div.className = 'photo-item';
-                div.innerHTML = `
-                    <input type="file" accept="image/*" id="photoFile_${i}">
-                    <select id="photoPos_${i}">
-                        <option value="top">🔝 над заголовком</option>
-                        <option value="middle" selected>📌 в середине</option>
-                        <option value="bottom">🔚 в конце</option>
-                    </select>
-                    <button class="remove-photo" data-index="${i}">✖</button>
-                `;
-                photoListDiv.appendChild(div);
-                const fileInp = div.querySelector(`#photoFile_${i}`);
-                const posSel = div.querySelector(`#photoPos_${i}`);
-                photoFields[i] = { fileInput: fileInp, positionSelect: posSel };
-                div.querySelector('.remove-photo').onclick = (e) => {
-                    const idx = e.target.dataset.index;
-                    photoFields.splice(idx, 1);
-                    rebuildPhotoList();
-                };
-            }
-        }
-
-        addPhotoBtn.onclick = () => {
-            if (photoFields.length >= 5) { alert('Максимум 5 фото'); return; }
-            photoFields.push({});
-            rebuildPhotoList();
-        };
-
-        function resetPhotoFields() { photoFields = []; rebuildPhotoList(); }
-
-        function deleteNews(newsId) {
-            newsItems = newsItems.filter(item => item.id !== newsId);
-            try { localStorage.setItem('moscow_city_news_mobile', JSON.stringify(newsItems)); } catch(e) {}
-            renderNewsList();
-            if (detailView.classList.contains('show')) backToList();
-        }
-
-        function escapeHtml(unsafe) {
-            if (!unsafe) return unsafe;
-            return unsafe.replace(/[&<>"]/g, m => {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                if (m === '"') return '&quot;';
-                return m;
-            });
-        }
-
-        function showDetail(news) {
-            let html = `<h2 class="detail-title">${escapeHtml(news.title)}</h2>`;
-            if (news.images && news.images.length) {
-                news.images.filter(i => i.position === 'top').forEach(i => { if (i.data) html += `<img src="${i.data}" class="inline-image">`; });
-                html += `<div class="detail-text-block">${escapeHtml(news.fullText) || ''}</div>`;
-                news.images.filter(i => i.position === 'middle').forEach(i => { if (i.data) html += `<img src="${i.data}" class="inline-image">`; });
-                news.images.filter(i => i.position === 'bottom').forEach(i => { if (i.data) html += `<img src="${i.data}" class="inline-image">`; });
-            } else {
-                html += `<div class="detail-text-block">${escapeHtml(news.fullText) || ''}</div>`;
-                if (news.imageData) html += `<img src="${news.imageData}" class="inline-image">`;
-            }
-            detailContent.innerHTML = html;
-            newsContainer.style.display = 'none';
-            detailView.classList.add('show');
-        }
-
-        function backToList() {
-            detailView.classList.remove('show');
-            newsContainer.style.display = 'grid';
-        }
-
-        function renderNewsList() {
-            if (!newsContainer) return;
-            if (newsItems.length === 0) {
-                newsContainer.innerHTML = '<div class="empty-news">🏙️ Пока нет новостей</div>';
-                return;
-            }
-            let html = '';
-            newsItems.forEach(item => {
-                let cover = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'200\'%3E%3Crect width=\'400\' height=\'200\' fill=\'%23335f7e\'/%3E%3Ctext x=\'120\' y=\'120\' fill=\'%23fff\' font-size=\'60\'%3E🏙️%3C/text%3E%3C/svg%3E';
-                if (item.images?.length && item.images[0].data) cover = item.images[0].data;
-                html += `<div class="news-card" data-id="${item.id}"><div class="delete-btn ${isEditorMode ? 'visible' : ''}" data-id="${item.id}" onclick="event.stopPropagation(); window.dch('${item.id}')">✖</div><img class="card-img" src="${cover}" onerror="this.src='${cover}'"><div class="card-content"><div class="card-title">${escapeHtml(item.title) || ''}</div><div class="card-excerpt">${escapeHtml(item.excerpt) || ''}</div></div></div>`;
-            });
-            newsContainer.innerHTML = html;
-            document.querySelectorAll('.news-card').forEach(card => {
-                card.onclick = function(e) {
-                    if (e.target.classList.contains('delete-btn')) return;
-                    const id = this.dataset.id;
-                    const news = newsItems.find(n => n.id === id);
-                    if (news) showDetail(news);
-                };
-            });
-        }
-
-        window.dch = (id) => {
-            if (!isEditorMode) return;
-            pendingDeleteId = id;
-            deletePasswordModal.style.display = 'flex';
-            deletePasswordInput.value = '';
-            deletePasswordError.innerText = '';
-        };
-
-        backToListBtn.onclick = backToList;
-
-        cancelPassword.onclick = () => passwordModal.style.display = 'none';
-        checkPasswordBtn.onclick = () => {
-            if (passwordInput.value.trim() === '8282') {
-                passwordModal.style.display = 'none';
-                addModal.style.display = 'flex';
-                titleInp.value = ''; excerptInp.value = ''; fullTextInp.value = '';
-                resetPhotoFields();
-            } else { passwordError.innerText = '⛔ Неверный пароль'; }
-        };
-
-        cancelDeletePassword.onclick = () => { deletePasswordModal.style.display = 'none'; pendingDeleteId = null; };
-        checkDeletePasswordBtn.onclick = () => {
-            if (deletePasswordInput.value.trim() === '8282') {
-                if (pendingDeleteId) deleteNews(pendingDeleteId);
-                deletePasswordModal.style.display = 'none';
-                pendingDeleteId = null;
-            } else { deletePasswordError.innerText = '⛔ Неверный пароль'; }
-        };
-
-        let pressTimer;
-        viewNewsBtn.addEventListener('mousedown', () => {
-            pressTimer = setTimeout(() => {
-                isEditorMode = !isEditorMode;
-                renderNewsList();
-                alert(isEditorMode ? '🔓 Режим редактора' : '🔒 Режим просмотра');
-            }, 800);
-        });
-        viewNewsBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
-        viewNewsBtn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
-        viewNewsBtn.addEventListener('touchstart', (e) => {
-            pressTimer = setTimeout(() => {
-                isEditorMode = !isEditorMode;
-                renderNewsList();
-                alert(isEditorMode ? '🔓 Режим редактора' : '🔒 Режим просмотра');
-            }, 800);
-        });
-        viewNewsBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
-        viewNewsBtn.addEventListener('touchcancel', () => clearTimeout(pressTimer));
-        
-        viewNewsBtn.addEventListener('click', (e) => {
-            if (detailView.classList.contains('show')) backToList();
-            newsContainer.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        cancelAddModal.onclick = () => addModal.style.display = 'none';
-        addNewsBtn.onclick = () => {
-            passwordModal.style.display = 'flex';
-            passwordInput.value = '';
-            passwordError.innerText = '';
-        };
-
-        publishBtn.onclick = async () => {
-            const title = titleInp.value.trim();
-            const excerpt = excerptInp.value.trim();
-            const full = fullTextInp.value.trim();
-            if (!title || !excerpt || !full) { alert('Заполните все поля'); return; }
-            const images = [];
-            for (let i = 0; i < photoFields.length; i++) {
-                const f = photoFields[i];
-                const file = f.fileInput?.files[0];
-                if (file) {
-                    const dataUrl = await new Promise(r => { const rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(file); });
-                    images.push({ data: dataUrl, position: f.positionSelect?.value || 'middle' });
-                }
-            }
-            const newNews = { id: 'msk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6), title, excerpt, fullText: full, images };
-            newsItems.unshift(newNews);
-            try { localStorage.setItem('moscow_city_news_mobile', JSON.stringify(newsItems)); } catch(e) {}
-            renderNewsList();
-            if (detailView.classList.contains('show')) backToList();
-            addModal.style.display = 'none';
-        };
-
-        window.onclick = (e) => {
-            if (e.target === passwordModal) passwordModal.style.display = 'none';
-            if (e.target === addModal) addModal.style.display = 'none';
-            if (e.target === deletePasswordModal) deletePasswordModal.style.display = 'none';
-        };
-
-        renderNewsList();
-        window.onload = () => { if (newsItems.length) localStorage.setItem('moscow_city_news_mobile', JSON.stringify(newsItems)); };
-    })();
-    <script>
 (function() {
-    // ================== ЗАГРУЗКА НОВОСТЕЙ ==================
+    // ================== СОХРАНЕНИЕ В ОНЛАЙНЕ ==================
+    // КЛЮЧ, по которому хранятся новости
+    const STORAGE_KEY = 'moscow_news_online';
+    
+    // Загружаем новости
     let newsItems = [];
-
     try {
-        const saved = localStorage.getItem('moscow_news_data');
+        const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
             newsItems = JSON.parse(saved);
         } else {
-            // Стартовые новости (только если вообще ничего нет)
+            // Стартовые новости, если ничего нет
             newsItems = [
-                { id: 'msk1', title: '🚇 Новая станция метро', excerpt: 'Открытие "Нагатинского Затона"', fullText: 'Станция расположена на Замоскворецкой линии.', images: [] },
-                { id: 'msk2', title: '🎪 Фестиваль на Тверской', excerpt: 'Концерты и ярмарки', fullText: 'Улицу перекрыли для транспорта.', images: [] },
-                { id: 'msk3', title: '🌷 Зарядье цветёт', excerpt: '3000 тюльпанов', fullText: 'Сотрудники приглашают на фото.', images: [] }
+                { 
+                    id: 'msk1', 
+                    title: '🚇 Новая станция метро "Нагатинский Затон"', 
+                    excerpt: 'Витражные потолки и современные вестибюли', 
+                    fullText: 'Станция расположена на Замоскворецкой линии. Выходы ведут к набережной и жилым кварталам.', 
+                    images: [] 
+                },
+                { 
+                    id: 'msk2', 
+                    title: '🎪 Фестиваль "Московское лето" на Тверской', 
+                    excerpt: 'Концерты, ярмарки и исторические реконструкции', 
+                    fullText: 'Улицу перекрыли для транспорта. Выступления уличных театров и гастрономические ряды.', 
+                    images: [] 
+                },
+                { 
+                    id: 'msk3', 
+                    title: '🌷 В парке Зарядье расцвели 3000 тюльпанов', 
+                    excerpt: 'Небывалое цветение из-за ранней весны', 
+                    fullText: 'Сотрудники парка приглашают москвичей на фотосессии.', 
+                    images: [] 
+                }
             ];
-            localStorage.setItem('moscow_news_data', JSON.stringify(newsItems));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(newsItems));
         }
     } catch (e) {
         newsItems = [];
     }
 
-    // ================== СОХРАНЕНИЕ ==================
+    // Функция сохранения (вызывается после любого изменения)
     function saveNews() {
         try {
-            localStorage.setItem('moscow_news_data', JSON.stringify(newsItems));
-        } catch (e) {}
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(newsItems));
+            console.log('Новости сохранены, всего:', newsItems.length);
+        } catch (e) {
+            console.error('Ошибка сохранения:', e);
+        }
     }
 
     // ================== DOM ЭЛЕМЕНТЫ ==================
@@ -948,7 +731,7 @@
     // ================== УДАЛЕНИЕ ==================
     function deleteNews(newsId) {
         newsItems = newsItems.filter(item => item.id !== newsId);
-        saveNews();
+        saveNews(); // СОХРАНЯЕМ
         renderNewsList();
         if (detailView.classList.contains('show')) backToList();
     }
@@ -1105,7 +888,7 @@
             images 
         };
         newsItems.unshift(newNews);
-        saveNews(); // ← ВАЖНО: сохраняем в localStorage
+        saveNews(); // ← СОХРАНЯЕМ В LOCALSTORAGE
         renderNewsList();
         if (detailView.classList.contains('show')) backToList();
         addModal.style.display = 'none';
@@ -1120,8 +903,10 @@
 
     // ================== СТАРТ ==================
     renderNewsList();
+    
+    // Для отладки - показываем количество новостей в консоли
+    console.log('Загружено новостей:', newsItems.length);
 })();
-</script>
 </script>
 </body>
 </html>
