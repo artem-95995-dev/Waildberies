@@ -2,20 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Новости Москва • Мегаполис</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
             background: linear-gradient(145deg, #d9e6f2 0%, #f2f8ff 100%);
             min-height: 100vh;
-            padding: 30px 25px;
+            padding: 15px 12px;
             position: relative;
         }
 
@@ -26,8 +26,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 220, 150, 0.2) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 70%, rgba(150, 200, 255, 0.25) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 30%, rgba(255, 220, 150, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 70%, rgba(150, 200, 255, 0.2) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -38,9 +38,9 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            border-radius: 70px;
-            box-shadow: 0 50px 90px -30px #102b40, 0 0 0 2px rgba(255, 255, 255, 0.8) inset;
-            padding: 50px 55px;
+            border-radius: clamp(30px, 8vw, 70px);
+            box-shadow: 0 25px 50px -20px #102b40, 0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+            padding: clamp(20px, 5vw, 50px);
             position: relative;
             z-index: 10;
             border: 1px solid rgba(255, 255, 255, 0.9);
@@ -51,16 +51,17 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 45px;
+            margin-bottom: clamp(25px, 4vw, 45px);
             background: rgba(255, 255, 255, 0.4);
-            border-radius: 120px;
-            padding: 16px 30px 16px 45px;
-            box-shadow: 0 20px 40px -12px #1a3a52, 0 2px 0 0 rgba(255,255,255,0.8) inset;
+            border-radius: 60px;
+            padding: 12px 18px 12px 22px;
+            box-shadow: 0 10px 25px -10px #1a3a52, 0 1px 0 0 rgba(255,255,255,0.8) inset;
             border: 1px solid rgba(255,255,255,0.8);
+            gap: 12px;
         }
 
         .logo h1 {
-            font-size: 3rem;
+            font-size: clamp(1.8rem, 6vw, 3rem);
             font-weight: 800;
             background: linear-gradient(145deg, #00263b, #1f5680);
             -webkit-background-clip: text;
@@ -68,55 +69,60 @@
             letter-spacing: -0.02em;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 8px;
+            line-height: 1.1;
         }
 
         .logo h1::after {
             content: '★';
-            font-size: 3rem;
+            font-size: clamp(1.8rem, 6vw, 3rem);
             -webkit-text-fill-color: #c9a03d;
             color: #c9a03d;
-            text-shadow: 0 5px 10px #926d24;
+            text-shadow: 0 3px 6px #926d24;
         }
 
         .badge {
             background: #204967;
             color: white;
-            padding: 10px 28px;
-            border-radius: 60px;
+            padding: 6px 16px;
+            border-radius: 40px;
             font-weight: 600;
-            font-size: 1.2rem;
-            box-shadow: inset 0 -4px 0 #0e293f;
+            font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+            box-shadow: inset 0 -2px 0 #0e293f;
             border: 1px solid #8bb3d1;
+            white-space: nowrap;
         }
 
         .action-buttons {
             display: flex;
-            gap: 20px;
+            gap: 10px;
+            width: 100%;
+            justify-content: flex-end;
         }
 
         .btn {
             border: none;
-            padding: 20px 48px;
-            border-radius: 70px;
+            padding: 14px 22px;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
             background: rgba(255, 255, 255, 0.9);
             color: #021e30;
             backdrop-filter: blur(5px);
-            box-shadow: 0 25px 35px -15px #021e32, 0 3px 0 0 white inset;
+            box-shadow: 0 15px 25px -12px #021e32, 0 2px 0 0 white inset;
             cursor: pointer;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             border: 2px solid white;
+            white-space: nowrap;
         }
 
         .btn-primary {
             background: #11314a;
             color: white;
-            box-shadow: 0 30px 40px -15px #001b2d, 0 3px 0 0 #6c93b5 inset;
+            box-shadow: 0 20px 30px -12px #001b2d, 0 2px 0 0 #6c93b5 inset;
         }
 
         .btn-primary:hover {
@@ -130,17 +136,17 @@
 
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-            gap: 40px;
-            margin: 50px 0 45px;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+            gap: 25px;
+            margin: 30px 0 35px;
         }
 
         .news-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            border-radius: 60px;
+            border-radius: 40px;
             overflow: hidden;
-            box-shadow: 0 30px 45px -20px #12314a, 0 0 0 2px rgba(255, 255, 255, 0.9) inset;
+            box-shadow: 0 20px 30px -15px #12314a, 0 0 0 2px rgba(255, 255, 255, 0.9) inset;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -149,37 +155,37 @@
         }
 
         .news-card:hover {
-            transform: translateY(-12px) scale(1.01);
-            box-shadow: 0 45px 60px -20px #03273f, 0 0 0 4px white inset;
+            transform: translateY(-6px);
+            box-shadow: 0 30px 40px -15px #03273f, 0 0 0 4px white inset;
             background: rgba(255, 255, 255, 0.95);
         }
 
         .delete-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
+            top: 12px;
+            right: 12px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: #c0392b;
             color: white;
             border: 3px solid white;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 20;
-            box-shadow: 0 5px 15px #3d1e1e;
+            box-shadow: 0 4px 10px #3d1e1e;
             transition: 0.2s;
             line-height: 1;
             display: none;
         }
 
-        .delete-btn:hover {
-            background: #e74c3c;
+        .delete-btn:active {
             transform: scale(1.1);
+            background: #e74c3c;
         }
 
         .delete-btn.visible {
@@ -188,28 +194,28 @@
 
         .card-img {
             width: 100%;
-            height: 260px;
+            height: 200px;
             object-fit: cover;
             border-bottom: 4px solid white;
             pointer-events: none;
         }
 
         .card-content {
-            padding: 30px 28px 25px;
+            padding: 20px 18px 18px;
             pointer-events: none;
         }
 
         .card-title {
             font-weight: 800;
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            margin-bottom: 8px;
             color: #032a40;
             line-height: 1.2;
         }
 
         .card-excerpt {
             color: #1b4d6e;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
             line-height: 1.5;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -222,10 +228,10 @@
             display: none;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
-            border-radius: 80px;
-            padding: 60px;
-            margin: 30px 0;
-            box-shadow: 0 45px 70px -25px #00263b;
+            border-radius: clamp(30px, 6vw, 80px);
+            padding: clamp(20px, 5vw, 60px);
+            margin: 20px 0;
+            box-shadow: 0 30px 50px -20px #00263b;
             border: 3px solid white;
         }
 
@@ -236,22 +242,22 @@
         .detail-back {
             background: rgba(255, 255, 255, 0.8);
             border: 3px solid white;
-            padding: 20px 45px;
-            border-radius: 70px;
+            padding: 14px 28px;
+            border-radius: 50px;
             font-weight: 700;
             color: #00263b;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             cursor: pointer;
-            font-size: 1.4rem;
+            font-size: clamp(1.2rem, 4vw, 1.4rem);
             display: inline-flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 20px 30px -15px #021e32;
+            gap: 10px;
+            box-shadow: 0 15px 25px -12px #021e32;
         }
 
-        .detail-back:hover {
+        .detail-back:active {
             background: white;
-            gap: 22px;
+            gap: 15px;
         }
 
         .detail-content {
@@ -260,48 +266,49 @@
         }
 
         .detail-title {
-            font-size: 4rem;
+            font-size: clamp(2.2rem, 7vw, 4rem);
             font-weight: 800;
             color: #00263b;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             background: linear-gradient(125deg, #002f4b, #216494);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.1;
         }
 
         .inline-image {
             max-width: 100%;
-            border-radius: 60px;
-            margin: 35px 0;
-            box-shadow: 0 35px 50px -20px #032c44, 0 0 0 5px white, 0 0 0 8px #bed6ec;
+            border-radius: clamp(25px, 5vw, 60px);
+            margin: 25px 0;
+            box-shadow: 0 25px 35px -15px #032c44, 0 0 0 5px white, 0 0 0 7px #bed6ec;
             display: block;
         }
 
         .image-position-top {
             margin-top: 0;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
 
         .image-position-middle {
-            margin: 40px 0;
+            margin: 30px 0;
         }
 
         .image-position-bottom {
-            margin-top: 35px;
-            margin-bottom: 10px;
+            margin-top: 25px;
+            margin-bottom: 5px;
         }
 
         .detail-text-block {
-            font-size: 1.6rem;
+            font-size: clamp(1.2rem, 4vw, 1.6rem);
             line-height: 1.6;
             color: #0e334b;
             white-space: pre-wrap;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 70px;
-            padding: 45px 50px;
+            border-radius: clamp(30px, 6vw, 70px);
+            padding: clamp(25px, 5vw, 45px);
             backdrop-filter: blur(2px);
             border: 2px solid rgba(255, 255, 255, 0.9);
-            margin: 35px 0;
+            margin: 25px 0;
             font-weight: 500;
         }
 
@@ -310,164 +317,197 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(8px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            padding: 15px;
         }
 
         .modal-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(25px);
             max-width: 800px;
-            width: 90%;
-            padding: 55px;
-            border-radius: 100px;
-            box-shadow: 0 60px 90px -25px #021d33;
+            width: 100%;
+            padding: clamp(25px, 6vw, 55px);
+            border-radius: clamp(40px, 8vw, 100px);
+            box-shadow: 0 40px 70px -20px #021d33;
             border: 4px solid white;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-card h2 {
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             color: #00263b;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
 
         .input-group {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .input-group label {
             font-weight: 700;
             color: #14466b;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             display: block;
-            font-size: 1.4rem;
+            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
         }
 
         .input-group input, .input-group textarea, .input-group select {
             width: 100%;
-            padding: 22px 32px;
-            border: 4px solid white;
-            border-radius: 80px;
-            font-size: 1.2rem;
+            padding: 16px 22px;
+            border: 3px solid white;
+            border-radius: 50px;
+            font-size: 1rem;
             background: #ecf5fc;
             border: 3px solid #dae8f5;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .input-group input:focus, .input-group textarea:focus {
             border-color: #2d7eb3;
             background: white;
+            outline: none;
         }
 
         .photo-upload-panel {
             background: #deecf9;
-            border-radius: 80px;
-            padding: 35px;
-            border: 4px dashed white;
-            margin: 25px 0;
+            border-radius: 50px;
+            padding: 20px;
+            border: 3px dashed white;
+            margin: 20px 0;
         }
 
         .photo-item {
             background: white;
-            border-radius: 90px;
-            padding: 20px 25px;
-            margin-bottom: 20px;
+            border-radius: 60px;
+            padding: 15px;
+            margin-bottom: 15px;
             display: flex;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
             align-items: center;
         }
 
         .photo-item input[type="file"] {
             flex: 2;
-            min-width: 250px;
+            min-width: 200px;
+            padding: 12px;
+            font-size: 0.9rem;
         }
 
         .photo-item select {
             flex: 1;
-            min-width: 180px;
+            min-width: 150px;
+            padding: 12px;
+            border-radius: 50px;
         }
 
         .remove-photo {
             background: #c0392b;
             color: white;
             border: none;
-            width: 60px;
-            height: 60px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            font-size: 2rem;
+            font-size: 1.8rem;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .add-photo-btn {
             background: #1f5680;
             color: white;
             border: none;
-            padding: 20px 38px;
-            border-radius: 70px;
+            padding: 16px 28px;
+            border-radius: 60px;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            border-bottom: 6px solid #0d314a;
+            border-bottom: 5px solid #0d314a;
+            width: 100%;
         }
 
         .modal-actions {
             display: flex;
-            gap: 25px;
-            margin-top: 40px;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
 
         .modal-actions button {
             flex: 1;
-            padding: 22px;
-            border-radius: 80px;
+            min-width: 140px;
+            padding: 16px;
+            border-radius: 60px;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             border: none;
             background: white;
-            border-bottom: 6px solid #b3c9df;
+            border-bottom: 5px solid #b3c9df;
             cursor: pointer;
         }
 
         .btn-publish {
             background: #03263b !important;
             color: white !important;
-            border-bottom: 6px solid #153e5a !important;
+            border-bottom: 5px solid #153e5a !important;
         }
 
         .empty-news {
             text-align: center;
-            padding: 90px;
+            padding: 50px 20px;
             background: #e1effa;
-            border-radius: 110px;
-            font-size: 2rem;
+            border-radius: 60px;
+            font-size: clamp(1.4rem, 5vw, 2rem);
             color: #01273f;
         }
 
         footer {
-            margin-top: 60px;
+            margin-top: 40px;
             color: #1d3d57;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
             font-weight: 500;
             background: rgba(255,255,255,0.4);
-            padding: 25px 30px;
-            border-radius: 100px;
+            padding: 20px;
+            border-radius: 50px;
             border: 2px solid rgba(255,255,255,0.9);
         }
 
         .game-disclaimer {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             font-weight: 800;
             color: #832828;
             background: rgba(255, 255, 255, 0.7);
-            padding: 15px 25px;
-            border-radius: 70px;
-            margin-bottom: 25px;
+            padding: 12px 18px;
+            border-radius: 50px;
+            margin-bottom: 20px;
             display: inline-block;
             backdrop-filter: blur(5px);
             border: 2px solid #ffbaba;
+        }
+
+        /* Адаптация для маленьких экранов */
+        @media (max-width: 500px) {
+            body { padding: 8px; }
+            .header { flex-direction: column; align-items: stretch; }
+            .action-buttons { justify-content: center; }
+            .btn { padding: 12px 16px; font-size: 1rem; }
+            .badge { align-self: flex-start; }
+            .photo-item { flex-direction: column; }
+            .photo-item input[type="file"], 
+            .photo-item select { width: 100%; }
+            .modal-actions button { min-width: 100%; }
+        }
+
+        /* Для телефонов с маленьким экраном */
+        @media (max-width: 380px) {
+            .btn { padding: 10px 12px; font-size: 0.9rem; }
+            .card-title { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -479,15 +519,15 @@
             <span class="badge">#центр столицы</span>
         </div>
         <div class="action-buttons">
-            <button class="btn btn-outline" id="viewNewsBtn">📰 Смотреть новости</button>
-            <button class="btn btn-primary" id="addNewsBtn">➕ Добавить новость</button>
+            <button class="btn btn-outline" id="viewNewsBtn">📰 Смотреть</button>
+            <button class="btn btn-primary" id="addNewsBtn">➕ Добавить</button>
         </div>
     </div>
 
     <div id="newsContainer" class="news-grid"></div>
 
     <div id="detailView" class="detail-view">
-        <button class="detail-back" id="backToList">← ко всем новостям</button>
+        <button class="detail-back" id="backToList">← ко всем</button>
         <div class="detail-content" id="detailContent"></div>
     </div>
 
@@ -503,29 +543,29 @@
                 <button id="cancelPassword">Отмена</button>
                 <button id="checkPasswordBtn" class="btn-publish">Войти</button>
             </div>
-            <p id="passwordError" style="color:#b52e2e; margin-top:20px; font-size:1.3rem;"></p>
+            <p id="passwordError" style="color:#b52e2e; margin-top:15px; font-size:1.2rem;"></p>
         </div>
     </div>
 
     <!-- модалка добавления новости -->
     <div id="addModal" class="modal">
-        <div class="modal-card" style="max-width: 1000px;">
+        <div class="modal-card">
             <h2>📝 Новая московская новость</h2>
             <div class="input-group">
                 <label>Заголовок</label>
                 <input type="text" id="newsTitle" placeholder="Например: Открытие станции метро">
             </div>
             <div class="input-group">
-                <label>Краткое описание (для карточки)</label>
+                <label>Краткое описание</label>
                 <textarea id="newsExcerpt" rows="2" placeholder="Коротко о событии..."></textarea>
             </div>
             <div class="input-group">
-                <label>Полный текст новости</label>
+                <label>Полный текст</label>
                 <textarea id="newsFullText" rows="3" placeholder="Подробности..."></textarea>
             </div>
 
             <div class="photo-upload-panel">
-                <label style="font-size:1.6rem; font-weight:700;">📸 Фотографии (до 5 шт, можно выбрать позицию)</label>
+                <label style="font-size:1.3rem; font-weight:700; margin-bottom:15px; display:block;">📸 Фотографии (до 5)</label>
                 <div id="photoList"></div>
                 <button type="button" class="add-photo-btn" id="addPhotoBtn">➕ Добавить фото</button>
             </div>
@@ -537,84 +577,60 @@
         </div>
     </div>
 
-    <!-- модалка удаления (пароль для удаления) -->
+    <!-- модалка удаления -->
     <div id="deletePasswordModal" class="modal">
         <div class="modal-card">
             <h2>🔐 Удаление новости</h2>
             <div class="input-group">
-                <label>Введите пароль редактора</label>
+                <label>Введите пароль</label>
                 <input type="password" id="deletePasswordInput" placeholder="●●●●">
             </div>
             <div class="modal-actions">
                 <button id="cancelDeletePassword">Отмена</button>
                 <button id="checkDeletePasswordBtn" class="btn-publish">Подтвердить</button>
             </div>
-            <p id="deletePasswordError" style="color:#b52e2e; margin-top:20px; font-size:1.3rem;"></p>
+            <p id="deletePasswordError" style="color:#b52e2e; margin-top:15px;"></p>
         </div>
     </div>
 
-    <!-- FOOTER С ДИСКЛЕЙМЕРОМ ПРО ИГРУ И ИКОНКАМИ -->
     <footer>
-        <div class="game-disclaimer">⚠️ ВСЕ НОВОСТИ ЯВЛЯЮТСЯ ВЫМЫШЛЕННЫМИ И ОТНОСЯТСЯ К ВИДЕОИГРЕ ⚠️</div>
-        © 2025 Новости Москва (игровой проект). Не имеет отношения к реальным событиям.
-
-        <!-- БЛОК С ИКОНКАМИ -->
-        <div style="margin-top: 30px; padding-top: 25px; border-top: 2px dashed rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 1.2rem;">
-            <span style="display: flex; align-items: center; gap: 8px;">🕹️ <strong>Не игровой агрегатор</strong></span>
+        <div class="game-disclaimer">⚠️ ВСЕ НОВОСТИ ВЫМЫШЛЕНЫ (ВИДЕОИГРА) ⚠️</div>
+        © 2025 Новости Москва (игровой проект)
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 2px dashed rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-size: 1rem;">
+            <span style="display: flex; align-items: center; gap: 5px;">🕹️ <strong>Не игровой агрегатор</strong></span>
             <span style="color: #aaa;">|</span>
-            <span style="display: flex; align-items: center; gap: 8px;">🎮 <strong>Чисто по приколу</strong></span>
+            <span style="display: flex; align-items: center; gap: 5px;">🎮 <strong>Чисто по приколу</strong></span>
             <span style="color: #aaa;">|</span>
-            <span style="display: flex; align-items: center; gap: 8px;">🚫 <strong>Никакой политики</strong></span>
+            <span style="display: flex; align-items: center; gap: 5px;">🚫 <strong>Никакой политики</strong></span>
         </div>
     </footer>
 </div>
 
 <script>
     (function() {
-        // Хранилище — московские новости
         let newsItems = [];
-
         try {
-            const stored = localStorage.getItem('moscow_city_news');
+            const stored = localStorage.getItem('moscow_city_news_mobile');
             if (stored) {
                 newsItems = JSON.parse(stored);
             } else {
-                // Стартовые новости про Москву
                 newsItems = [
-                    {
-                        id: 'msk1',
-                        title: 'Новая станция метро "Нагатинский Затон" открылась',
-                        excerpt: 'Пассажиров ждут витражные потолки и современные вестибюли.',
-                        fullText: 'Станция расположена на Замоскворецкой линии. Выходы ведут к набережной и жилым кварталам. Движение поездов запущено с утра.',
-                        images: []
-                    },
-                    {
-                        id: 'msk2',
-                        title: 'Фестиваль "Московское лето" на Тверской',
-                        excerpt: 'Горожан ждут концерты, ярмарки и исторические реконструкции.',
-                        fullText: 'Улицу перекрыли для транспорта. Организаторы обещают выступления уличных театров и гастрономические ряды.',
-                        images: []
-                    },
-                    {
-                        id: 'msk3',
-                        title: 'В парке Зарядье расцвели 3000 тюльпанов',
-                        excerpt: 'Небывалое цветение из-за ранней весны.',
-                        fullText: 'Сотрудники парка приглашают москвичей на фотосессии. Ландшафтный дизайн обновлён.',
-                        images: []
-                    }
+                    { id: 'msk1', title: 'Новая станция метро "Нагатинский Затон" открылась', excerpt: 'Пассажиров ждут витражные потолки и современные вестибюли.', fullText: 'Станция расположена на Замоскворецкой линии. Выходы ведут к набережной и жилым кварталам. Движение поездов запущено с утра.', images: [] },
+                    { id: 'msk2', title: 'Фестиваль "Московское лето" на Тверской', excerpt: 'Горожан ждут концерты, ярмарки и исторические реконструкции.', fullText: 'Улицу перекрыли для транспорта. Организаторы обещают выступления уличных театров и гастрономические ряды.', images: [] },
+                    { id: 'msk3', title: 'В парке Зарядье расцвели 3000 тюльпанов', excerpt: 'Небывалое цветение из-за ранней весны.', fullText: 'Сотрудники парка приглашают москвичей на фотосессии. Ландшафтный дизайн обновлён.', images: [] }
                 ];
             }
         } catch (e) {}
 
-        // Состояние редактора (показывать ли кнопки удаления)
         let isEditorMode = false;
+        let pendingDeleteId = null;
+        let photoFields = [];
 
         // DOM элементы
         const newsContainer = document.getElementById('newsContainer');
         const detailView = document.getElementById('detailView');
         const detailContent = document.getElementById('detailContent');
         const backToListBtn = document.getElementById('backToList');
-
         const addNewsBtn = document.getElementById('addNewsBtn');
         const viewNewsBtn = document.getElementById('viewNewsBtn');
         const passwordModal = document.getElementById('passwordModal');
@@ -625,29 +641,22 @@
         const cancelAddModal = document.getElementById('cancelAddModal');
         const publishBtn = document.getElementById('publishNewsBtn');
         const passwordError = document.getElementById('passwordError');
-
-        // Элементы для модалки удаления
         const deletePasswordModal = document.getElementById('deletePasswordModal');
         const deletePasswordInput = document.getElementById('deletePasswordInput');
         const checkDeletePasswordBtn = document.getElementById('checkDeletePasswordBtn');
         const cancelDeletePassword = document.getElementById('cancelDeletePassword');
         const deletePasswordError = document.getElementById('deletePasswordError');
-
-        let pendingDeleteId = null; // ID новости, которую пытаемся удалить
-
         const titleInp = document.getElementById('newsTitle');
         const excerptInp = document.getElementById('newsExcerpt');
         const fullTextInp = document.getElementById('newsFullText');
         const photoListDiv = document.getElementById('photoList');
         const addPhotoBtn = document.getElementById('addPhotoBtn');
 
-        let photoFields = [];
-
         function rebuildPhotoList() {
             if (!photoListDiv) return;
             photoListDiv.innerHTML = '';
             if (photoFields.length === 0) {
-                photoListDiv.innerHTML = '<div style="background:#ecf5fc; border-radius:70px; padding:35px; text-align:center; font-size:1.4rem;">📎 Прикрепите фотографии (по желанию)</div>';
+                photoListDiv.innerHTML = '<div style="background:#ecf5fc; border-radius:50px; padding:20px; text-align:center;">📎 Добавьте фото</div>';
                 return;
             }
             for (let i = 0; i < photoFields.length; i++) {
@@ -657,98 +666,37 @@
                     <input type="file" accept="image/*" id="photoFile_${i}">
                     <select id="photoPos_${i}">
                         <option value="top">🔝 над заголовком</option>
-                        <option value="middle" selected>📌 в середине текста</option>
-                        <option value="bottom">🔚 в конце текста</option>
+                        <option value="middle" selected>📌 в середине</option>
+                        <option value="bottom">🔚 в конце</option>
                     </select>
                     <button class="remove-photo" data-index="${i}">✖</button>
                 `;
                 photoListDiv.appendChild(div);
-
                 const fileInp = div.querySelector(`#photoFile_${i}`);
                 const posSel = div.querySelector(`#photoPos_${i}`);
                 photoFields[i] = { fileInput: fileInp, positionSelect: posSel };
-
-                div.querySelector('.remove-photo').addEventListener('click', (e) => {
-                    const idx = e.target.getAttribute('data-index');
+                div.querySelector('.remove-photo').onclick = (e) => {
+                    const idx = e.target.dataset.index;
                     photoFields.splice(idx, 1);
                     rebuildPhotoList();
-                });
+                };
             }
         }
 
-        addPhotoBtn.addEventListener('click', () => {
-            if (photoFields.length >= 5) {
-                alert('Максимум 5 фото');
-                return;
-            }
+        addPhotoBtn.onclick = () => {
+            if (photoFields.length >= 5) { alert('Максимум 5 фото'); return; }
             photoFields.push({});
             rebuildPhotoList();
-        });
+        };
 
-        function resetPhotoFields() {
-            photoFields = [];
-            rebuildPhotoList();
-        }
+        function resetPhotoFields() { photoFields = []; rebuildPhotoList(); }
 
-        // Функция удаления новости (только для редактора)
         function deleteNews(newsId) {
             newsItems = newsItems.filter(item => item.id !== newsId);
-            try {
-                localStorage.setItem('moscow_city_news', JSON.stringify(newsItems));
-            } catch(e) {}
+            try { localStorage.setItem('moscow_city_news_mobile', JSON.stringify(newsItems)); } catch(e) {}
             renderNewsList();
-            if (detailView.classList.contains('show')) {
-                backToList();
-            }
+            if (detailView.classList.contains('show')) backToList();
         }
-
-        function renderNewsList() {
-            if (!newsContainer) return;
-            if (newsItems.length === 0) {
-                newsContainer.innerHTML = '<div class="empty-news">🏙️ Пока нет новостей. Создайте первую!</div>';
-                return;
-            }
-
-            let html = '';
-            newsItems.forEach(item => {
-                let coverImage = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'500\' height=\'300\' viewBox=\'0 0 500 300\'%3E%3Crect width=\'500\' height=\'300\' fill=\'%23335f7e\'/%3E%3Ctext x=\'120\' y=\'170\' fill=\'%23ffffff\' font-size=\'70\' font-family=\'Inter\'%3E🏙️%3C/text%3E%3C/svg%3E';
-                if (item.images && item.images.length > 0 && item.images[0].data) {
-                    coverImage = item.images[0].data;
-                } else if (item.imageData) {
-                    coverImage = item.imageData;
-                }
-
-                html += `
-                    <div class="news-card" data-id="${item.id}">
-                        <div class="delete-btn ${isEditorMode ? 'visible' : ''}" data-id="${item.id}" onclick="event.stopPropagation(); window.deleteClickHandler('${item.id}')">✖</div>
-                        <img class="card-img" src="${coverImage}" alt="" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22300%22%20viewBox%3D%220%200%20500%20300%22%3E%3Crect%20width%3D%22500%22%20height%3D%22300%22%20fill%3D%22%232f6183%22%2F%3E%3Ctext%20x%3D%22180%22%20y%3D%22180%22%20fill%3D%22%23ffffff%22%20font-size%3D%2290%22%3E%F0%9F%8C%83%3C%2Ftext%3E%3C%2Fsvg%3E')">
-                        <div class="card-content">
-                            <div class="card-title">${escapeHtml(item.title) || 'Москва'}</div>
-                            <div class="card-excerpt">${escapeHtml(item.excerpt) || ''}</div>
-                        </div>
-                    </div>
-                `;
-            });
-            newsContainer.innerHTML = html;
-
-            document.querySelectorAll('.news-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('delete-btn')) return;
-                    const id = this.getAttribute('data-id');
-                    const news = newsItems.find(n => n.id === id);
-                    if (news) showDetail(news);
-                });
-            });
-        }
-
-        // Глобальный обработчик для клика по удалению
-        window.deleteClickHandler = function(id) {
-            if (!isEditorMode) return;
-            pendingDeleteId = id;
-            deletePasswordModal.style.display = 'flex';
-            deletePasswordInput.value = '';
-            deletePasswordError.innerText = '';
-        };
 
         function escapeHtml(unsafe) {
             if (!unsafe) return unsafe;
@@ -762,25 +710,17 @@
         }
 
         function showDetail(news) {
-            let contentHtml = `<h2 class="detail-title">${escapeHtml(news.title)}</h2>`;
-
-            if (news.images && news.images.length > 0) {
-                const top = news.images.filter(i => i.position === 'top');
-                top.forEach(i => { if (i.data) contentHtml += `<img src="${i.data}" class="inline-image image-position-top">`; });
-
-                contentHtml += `<div class="detail-text-block">${escapeHtml(news.fullText) || ''}</div>`;
-
-                const mid = news.images.filter(i => i.position === 'middle');
-                mid.forEach(i => { if (i.data) contentHtml += `<img src="${i.data}" class="inline-image">`; });
-
-                const bot = news.images.filter(i => i.position === 'bottom');
-                bot.forEach(i => { if (i.data) contentHtml += `<img src="${i.data}" class="inline-image">`; });
+            let html = `<h2 class="detail-title">${escapeHtml(news.title)}</h2>`;
+            if (news.images && news.images.length) {
+                news.images.filter(i => i.position === 'top').forEach(i => { if (i.data) html += `<img src="${i.data}" class="inline-image">`; });
+                html += `<div class="detail-text-block">${escapeHtml(news.fullText) || ''}</div>`;
+                news.images.filter(i => i.position === 'middle').forEach(i => { if (i.data) html += `<img src="${i.data}" class="inline-image">`; });
+                news.images.filter(i => i.position === 'bottom').forEach(i => { if (i.data) html += `<img src="${i.data}" class="inline-image">`; });
             } else {
-                contentHtml += `<div class="detail-text-block">${escapeHtml(news.fullText) || ''}</div>`;
-                if (news.imageData) contentHtml += `<img src="${news.imageData}" class="inline-image">`;
+                html += `<div class="detail-text-block">${escapeHtml(news.fullText) || ''}</div>`;
+                if (news.imageData) html += `<img src="${news.imageData}" class="inline-image">`;
             }
-
-            detailContent.innerHTML = contentHtml;
+            detailContent.innerHTML = html;
             newsContainer.style.display = 'none';
             detailView.classList.add('show');
         }
@@ -790,121 +730,120 @@
             newsContainer.style.display = 'grid';
         }
 
-        backToListBtn.addEventListener('click', backToList);
-
-        function openPasswordModal() {
-            passwordModal.style.display = 'flex';
-            passwordInput.value = '';
-            passwordError.innerText = '';
+        function renderNewsList() {
+            if (!newsContainer) return;
+            if (newsItems.length === 0) {
+                newsContainer.innerHTML = '<div class="empty-news">🏙️ Пока нет новостей</div>';
+                return;
+            }
+            let html = '';
+            newsItems.forEach(item => {
+                let cover = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'200\'%3E%3Crect width=\'400\' height=\'200\' fill=\'%23335f7e\'/%3E%3Ctext x=\'120\' y=\'120\' fill=\'%23fff\' font-size=\'60\'%3E🏙️%3C/text%3E%3C/svg%3E';
+                if (item.images?.length && item.images[0].data) cover = item.images[0].data;
+                html += `<div class="news-card" data-id="${item.id}"><div class="delete-btn ${isEditorMode ? 'visible' : ''}" data-id="${item.id}" onclick="event.stopPropagation(); window.dch('${item.id}')">✖</div><img class="card-img" src="${cover}" onerror="this.src='${cover}'"><div class="card-content"><div class="card-title">${escapeHtml(item.title) || ''}</div><div class="card-excerpt">${escapeHtml(item.excerpt) || ''}</div></div></div>`;
+            });
+            newsContainer.innerHTML = html;
+            document.querySelectorAll('.news-card').forEach(card => {
+                card.onclick = function(e) {
+                    if (e.target.classList.contains('delete-btn')) return;
+                    const id = this.dataset.id;
+                    const news = newsItems.find(n => n.id === id);
+                    if (news) showDetail(news);
+                };
+            });
         }
 
-        cancelPassword.addEventListener('click', () => passwordModal.style.display = 'none');
-        
-        checkPasswordBtn.addEventListener('click', () => {
+        window.dch = (id) => {
+            if (!isEditorMode) return;
+            pendingDeleteId = id;
+            deletePasswordModal.style.display = 'flex';
+            deletePasswordInput.value = '';
+            deletePasswordError.innerText = '';
+        };
+
+        backToListBtn.onclick = backToList;
+
+        cancelPassword.onclick = () => passwordModal.style.display = 'none';
+        checkPasswordBtn.onclick = () => {
             if (passwordInput.value.trim() === '8282') {
                 passwordModal.style.display = 'none';
                 addModal.style.display = 'flex';
-                titleInp.value = '';
-                excerptInp.value = '';
-                fullTextInp.value = '';
+                titleInp.value = ''; excerptInp.value = ''; fullTextInp.value = '';
                 resetPhotoFields();
-            } else {
-                passwordError.innerText = '⛔ Неверный пароль';
-            }
-        });
+            } else { passwordError.innerText = '⛔ Неверный пароль'; }
+        };
 
-        // Обработчики для модалки удаления
-        cancelDeletePassword.addEventListener('click', () => {
-            deletePasswordModal.style.display = 'none';
-            pendingDeleteId = null;
-        });
-
-        checkDeletePasswordBtn.addEventListener('click', () => {
+        cancelDeletePassword.onclick = () => { deletePasswordModal.style.display = 'none'; pendingDeleteId = null; };
+        checkDeletePasswordBtn.onclick = () => {
             if (deletePasswordInput.value.trim() === '8282') {
-                if (pendingDeleteId) {
-                    deleteNews(pendingDeleteId);
-                }
+                if (pendingDeleteId) deleteNews(pendingDeleteId);
                 deletePasswordModal.style.display = 'none';
                 pendingDeleteId = null;
-            } else {
-                deletePasswordError.innerText = '⛔ Неверный пароль';
-            }
-        });
+            } else { deletePasswordError.innerText = '⛔ Неверный пароль'; }
+        };
 
-        // Вход в режим редактора (долгое нажатие на "Смотреть новости")
         let pressTimer;
         viewNewsBtn.addEventListener('mousedown', () => {
             pressTimer = setTimeout(() => {
                 isEditorMode = !isEditorMode;
                 renderNewsList();
-                alert(isEditorMode ? '🔓 Режим редактора включен (кнопки удаления видны)' : '🔒 Режим редактора выключен');
-            }, 1000);
+                alert(isEditorMode ? '🔓 Режим редактора' : '🔒 Режим просмотра');
+            }, 800);
         });
         viewNewsBtn.addEventListener('mouseup', () => clearTimeout(pressTimer));
         viewNewsBtn.addEventListener('mouseleave', () => clearTimeout(pressTimer));
-
-        // Обычный клик — просто скролл
+        viewNewsBtn.addEventListener('touchstart', (e) => {
+            pressTimer = setTimeout(() => {
+                isEditorMode = !isEditorMode;
+                renderNewsList();
+                alert(isEditorMode ? '🔓 Режим редактора' : '🔒 Режим просмотра');
+            }, 800);
+        });
+        viewNewsBtn.addEventListener('touchend', () => clearTimeout(pressTimer));
+        viewNewsBtn.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+        
         viewNewsBtn.addEventListener('click', (e) => {
             if (detailView.classList.contains('show')) backToList();
             newsContainer.scrollIntoView({ behavior: 'smooth' });
         });
 
-        cancelAddModal.addEventListener('click', () => addModal.style.display = 'none');
-        addNewsBtn.addEventListener('click', openPasswordModal);
+        cancelAddModal.onclick = () => addModal.style.display = 'none';
+        addNewsBtn.onclick = () => {
+            passwordModal.style.display = 'flex';
+            passwordInput.value = '';
+            passwordError.innerText = '';
+        };
 
-        publishBtn.addEventListener('click', async () => {
+        publishBtn.onclick = async () => {
             const title = titleInp.value.trim();
             const excerpt = excerptInp.value.trim();
             const full = fullTextInp.value.trim();
-            if (!title || !excerpt || !full) {
-                alert('Заполните заголовок, краткое описание и полный текст');
-                return;
-            }
-
+            if (!title || !excerpt || !full) { alert('Заполните все поля'); return; }
             const images = [];
             for (let i = 0; i < photoFields.length; i++) {
-                const field = photoFields[i];
-                const file = field.fileInput?.files[0];
+                const f = photoFields[i];
+                const file = f.fileInput?.files[0];
                 if (file) {
-                    const dataUrl = await readFileAsDataURL(file);
-                    const pos = field.positionSelect?.value || 'middle';
-                    images.push({ data: dataUrl, position: pos });
+                    const dataUrl = await new Promise(r => { const rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(file); });
+                    images.push({ data: dataUrl, position: f.positionSelect?.value || 'middle' });
                 }
             }
-
-            const newNews = {
-                id: 'msk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8),
-                title,
-                excerpt,
-                fullText: full,
-                images: images,
-            };
-
+            const newNews = { id: 'msk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6), title, excerpt, fullText: full, images };
             newsItems.unshift(newNews);
-            try { localStorage.setItem('moscow_city_news', JSON.stringify(newsItems)); } catch(e) {}
+            try { localStorage.setItem('moscow_city_news_mobile', JSON.stringify(newsItems)); } catch(e) {}
             renderNewsList();
             if (detailView.classList.contains('show')) backToList();
             addModal.style.display = 'none';
-        });
+        };
 
-        function readFileAsDataURL(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.readAsDataURL(file);
-            });
-        }
-
-        window.addEventListener('click', (e) => {
+        window.onclick = (e) => {
             if (e.target === passwordModal) passwordModal.style.display = 'none';
             if (e.target === addModal) addModal.style.display = 'none';
             if (e.target === deletePasswordModal) deletePasswordModal.style.display = 'none';
-        });
+        };
 
         renderNewsList();
-        window.addEventListener('load', () => {
-            if (newsItems.length) localStorage.setItem('moscow_city_news', JSON.stringify(newsItems));
-        });
+        window.onload = () => { if (newsItems.length) localStorage.setItem('moscow_city_news_mobile', JSON.stringify(newsItems)); };
     })();
 </script>
 </body>
